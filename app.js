@@ -56,6 +56,7 @@ const clovaSkillHandler = clova.Client
   //終了時
   .onSessionEndedRequest(responseHelper => {
     const sessionId = responseHelper.getSessionId();
+    responseHelper.setSimpleSpeech("わすれんぼを終わります");
   })
   .handle();
 
