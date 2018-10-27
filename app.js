@@ -41,7 +41,7 @@ const clovaSkillHandler = clova.Client
       value: 'まだ続けますか？'
     }
 
-    if(responseHelper.getSessionAttributes().isContinue === true){
+    if(responseHelper.getSessionAttributes().subsequent === true){
       console.log("Success!")
     }
     console.log(responseHelper.getSessionAttributes())
@@ -51,11 +51,9 @@ const clovaSkillHandler = clova.Client
         responseHelper.setSimpleSpeech({
           lang: 'ja',
           type: 'PlainText',
-          value: `登録しました。まだ続けますか？`
+          value: '登録しました。まだ続けますか？'
         })
-        responseHelper.setSessionAttributes({
-          isContinue: true
-        })
+
         // responseHelper.setSimpleSpeech(continuous, true)
 
         break;
@@ -64,34 +62,36 @@ const clovaSkillHandler = clova.Client
         let speech = {
           lang: 'ja',
           type: 'PlainText',
-          value: `${slots.object}は棚の上にあります。`
+          value: '${slots.object}は棚の上にあります。まだ続けますか？'
         }
         if (slots.area === '') {
-          speech.value = `捜し物の場所は登録されていません。`
+          speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
         }
         responseHelper.setSimpleSpeech(speech);
         responseHelper.setSimpleSpeech(continuous, true)
+
+        responseHelper.setSessionAttributes({
+          subsequent: true
+        })
+
         break;
       
       case 'Clova.YesIntent':
-        responseHelper.setSimpleSpeech({
-          lang: 'ja',
-          type: 'PlainText',
-          value: '忘れ物を探しますか？登録しますか？'
-        }, true);
-        break;
-      
-      case 'Clova.NoIntent':
-        if (responseHelper.getSessionAttributes().isContinue === false){
-         responseHelper.endSession();
+        if (responseHelper.getSessionAttributes().subsequent === true){
+          responseHelper.setSimpleSpeech({
+            lang: 'ja',
+            type: 'PlainText',
+            value: '忘れ物を探しますか？登録しますか？'
+          }, true);
         }
         break;
       
+      case 'Clova.NoIntent':
+        if (responseHelper.getSessionAttributes().subsequent === true){
+         responseHelper.endSession();
+        }
+        break;
 
-
-
-
-      
       case 'otoja':
         responseHelper.setSimpleSpeech({
           lang: 'ja',
@@ -101,6 +101,8 @@ const clovaSkillHandler = clova.Client
         responseHelper.setSimpleSpeech(continuous, true)
         break;
     }
+
+
 
   })
 
