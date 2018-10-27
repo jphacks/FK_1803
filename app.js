@@ -6,6 +6,9 @@ const clovaSkillHandler = clova.Client
 
   //起動時に喋る
   .onLaunchRequest(responseHelper => {
+
+    responseHelper.setSessionAttributes({});    
+
     // まずはこっちをしゃべる
     responseHelper.setSimpleSpeech({
       lang: 'ja',
@@ -68,8 +71,26 @@ const clovaSkillHandler = clova.Client
         }
         responseHelper.setSimpleSpeech(speech);
         responseHelper.setSimpleSpeech(continuous, true)
-
         break;
+      
+      case 'Clova.YesIntent':
+        responseHelper.setSimpleSpeech({
+          lang: 'ja',
+          type: 'PlainText',
+          value: '忘れ物を探しますか？登録しますか？'
+        }, true);
+        break;
+      
+      case 'Clova.NoIntent':
+        if (responseHelper.getSessionAttributes().isContinue === false){
+         responseHelper.endSession();
+        }
+        break;
+      
+
+
+
+
       
       case 'otoja':
         responseHelper.setSimpleSpeech({
