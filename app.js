@@ -54,6 +54,10 @@ const clovaSkillHandler = clova.Client
           value: '登録しました。まだ続けますか？'
         })
 
+        responseHelper.setSessionAttributes({
+          subsequent: true
+        })
+
         // responseHelper.setSimpleSpeech(continuous, true)
 
         break;
@@ -62,7 +66,7 @@ const clovaSkillHandler = clova.Client
         let speech = {
           lang: 'ja',
           type: 'PlainText',
-          value: '${slots.object}は棚の上にあります。まだ続けますか？'
+          value: `${slots.object}は棚の上にあります。まだ続けますか？`
         }
         if (slots.area === '') {
           speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
