@@ -24,15 +24,6 @@ const clovaSkillHandler = clova.Client
       responseHelper.setSimpleSpeech({
         lang: 'ja',
         type: 'PlainText',
-        value: 'おとじゃです'
-      })
-    }
-
-
-    if (intent === 'submit') {
-      responseHelper.setSimpleSpeech({
-        lang: 'ja',
-        type: 'PlainText',
         value: `登録しました。`
       })
     }
