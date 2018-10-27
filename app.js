@@ -19,6 +19,27 @@ const clovaSkillHandler = clova.Client
     const sessionId = responseHelper.getSessionId();
 
     console.log('Intent:' + intent);
+    if (intent === 'submit') {
+      let speech = {
+        lang: 'ja',
+        type: 'PlainText',
+        value: `登録しました。`
+      }
+    }
+    if (intent === 'answer') {
+      const slots = responseHelper.getSlots();
+      console.log(slots);
+      let speech = {
+        lang: 'ja',
+        type: 'PlainText',
+        value: `${slots.object}は棚の上にあります。`
+      }
+      if (slots.area === '') {
+        speech.value = `捜し物の場所は登録されていません。`
+      }
+      responseHelper.setSimpleSpeech(speech);
+      responseHelper.setSimpleSpeech(speech, true);
+    }
   })
 
   //終了時
@@ -29,10 +50,10 @@ const clovaSkillHandler = clova.Client
 
 
 const app = new express();
-const port = process.env.PORT || 3000;
+//const port = process.env.PORT || 3000;
 
 //リクエストの検証を行う場合。環境変数APPLICATION_ID(値はClova Developer Center上で入力したExtension ID)が必須
 const clovaMiddleware = clova.Middleware({ applicationId: 'com.startfox.wasrenbo' });
 app.post('/clova', clovaMiddleware, clovaSkillHandler);
 
-app.listen(port, () => console.log(`Server running on ${port}`));
+//app.listen(port, () => console.log(`Server running on ${port}`));
