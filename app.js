@@ -19,6 +19,16 @@ const clovaSkillHandler = clova.Client
     const sessionId = responseHelper.getSessionId();
 
     console.log('Intent:' + intent);
+
+    if (intent === 'otoja') {
+      responseHelper.setSimpleSpeech({
+        lang: 'ja',
+        type: 'PlainText',
+        value: 'おとじゃです'
+      })
+    }
+
+
     if (intent === 'submit') {
       responseHelper.setSimpleSpeech({
         lang: 'ja',
