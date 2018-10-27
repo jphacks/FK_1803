@@ -45,7 +45,7 @@ const clovaSkillHandler = clova.Client
         type: 'PlainText',
         value: `${slots.object}は棚の上にあります。`
       }
-      if (slots.object == 'undefined') {
+      if (slots.object === undefined) {
         speech.value = `捜し物の場所は登録されていません。`
       }
       responseHelper.setSimpleSpeech(speech);
