@@ -110,7 +110,6 @@ const clovaSkillHandler = clova.Client
     }
 
 
-
   })
 
   //終了時
