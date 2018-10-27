@@ -56,4 +56,4 @@ const app = new express();
 const clovaMiddleware = clova.Middleware({ applicationId: 'com.startfox.wasrenbo' });
 app.post('/clova', clovaMiddleware, clovaSkillHandler);
 
-//app.listen(port, () => console.log(`Server running on ${port}`));
+app.listen(port, () => console.log(`Server running on ${port}`));
