@@ -72,11 +72,11 @@ const clovaSkillHandler = clova.Client
           speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
         }
         responseHelper.setSimpleSpeech(speech);
-        responseHelper.setSimpleSpeech(continuous, true)
+        responseHelper.setSimpleSpeech(continuous, true);
 
         responseHelper.setSessionAttributes({
           subsequent: true
-        })
+        });
 
         break;
       
@@ -86,7 +86,10 @@ const clovaSkillHandler = clova.Client
             lang: 'ja',
             type: 'PlainText',
             value: '忘れ物を探しますか？登録しますか？'
-          }, true);
+          });
+
+          responseHelper.setSimpleSpeech(continuous, true);
+
         }
         break;
       
