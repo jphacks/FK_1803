@@ -38,6 +38,9 @@ const clovaSkillHandler = clova.Client
       value: 'まだ続けますか？'
     }
 
+    if(responseHelper.getSessionAttributes().isContinue === true){
+      console.log("Success!")
+    }
     console.log(responseHelper.getSessionAttributes())
 
     switch (intent) {
@@ -45,9 +48,12 @@ const clovaSkillHandler = clova.Client
         responseHelper.setSimpleSpeech({
           lang: 'ja',
           type: 'PlainText',
-          value: `登録しました。`
+          value: `登録しました。まだ続けますか？`
         })
-        responseHelper.setSimpleSpeech(continuous, true)
+        responseHelper.setSessionAttributes({
+          isContinue: true
+        })
+        // responseHelper.setSimpleSpeech(continuous, true)
 
         break;
       case 'answer':
