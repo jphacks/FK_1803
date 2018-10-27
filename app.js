@@ -1,6 +1,8 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
 
+
+
 const clovaSkillHandler = clova.Client
   .configureSkill()
 
@@ -28,8 +30,14 @@ const clovaSkillHandler = clova.Client
       })
     }
 
-
     if (intent === 'submit') {
+      //INSERTの処理
+      pg.connect(process.env.DATABASE_URL || "tcp://localhost:5432/mylocaldb", function(err, client, done) {
+        console.log(err);
+        console.log(client);
+        console.log(done);
+      });
+      
       responseHelper.setSimpleSpeech({
         lang: 'ja',
         type: 'PlainText',
