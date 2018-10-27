@@ -20,7 +20,7 @@ const clovaSkillHandler = clova.Client
 
     console.log('Intent:' + intent);
     if (intent === 'submit') {
-      esponseHelper.setSimpleSpeech({
+      responseHelper.setSimpleSpeech({
         lang: 'ja',
         type: 'PlainText',
         value: `登録しました。`
