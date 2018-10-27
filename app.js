@@ -17,7 +17,7 @@ const clovaSkillHandler = clova.Client
     responseHelper.setSimpleSpeech({
       lang: 'ja',
       type: 'PlainText',
-      value: 'ものを探しますか？登録しますか？'
+      value: '忘れ物を探しますか？登録しますか？'
     }, true);
   })
 
@@ -48,9 +48,7 @@ const clovaSkillHandler = clova.Client
         if (slots.area === '') {
           speech.value = `捜し物の場所は登録されていません。`
         }
-        // まずはこっち
         responseHelper.setSimpleSpeech(speech);
-        // responseHelper.setSimpleSpeech(speech, true);
         break;
       
       case 'otoja':
@@ -61,12 +59,14 @@ const clovaSkillHandler = clova.Client
         })
         break;
     }
+
+
   })
 
   //終了時
-  .onSessionEndedRequest(responseHelper => {
-    const sessionId = responseHelper.getSessionId();
-  })
+  // .onSessionEndedRequest(responseHelper => {
+  //   const sessionId = responseHelper.getSessionId();
+  // })
   .handle();
 
 
