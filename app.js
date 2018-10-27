@@ -52,8 +52,6 @@ const clovaSkillHandler = clova.Client
         break;
       case 'answer':
         const slots = responseHelper.getSlots();
-        console.log(slots);
-        console.log(slots.object);
         let speech = {
           lang: 'ja',
           type: 'PlainText',
