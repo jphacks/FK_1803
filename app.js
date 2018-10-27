@@ -19,6 +19,27 @@ const clovaSkillHandler = clova.Client
     const sessionId = responseHelper.getSessionId();
 
     console.log('Intent:' + intent);
+    if (intent === 'submit') {
+      responseHelper.setSimpleSpeech({
+        lang: 'ja',
+        type: 'PlainText',
+        value: `登録しました。`
+      })
+    }
+    if (intent === 'answer') {
+      const slots = responseHelper.getSlots();
+      console.log(slots);
+      let speech = {
+        lang: 'ja',
+        type: 'PlainText',
+        value: `${slots.object}は棚の上にあります。`
+      }
+      if (slots.area === '') {
+        speech.value = `捜し物の場所は登録されていません。`
+      }
+      responseHelper.setSimpleSpeech(speech);
+      responseHelper.setSimpleSpeech(speech, true);
+    }
   })
 
   //終了時
