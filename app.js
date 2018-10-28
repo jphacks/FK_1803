@@ -1,17 +1,10 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
-// const line = require('line-bot-sdk');
+const line = require('@line/bot-sdk');
 
-// const client = line.client({
-//     //Messaging APIのアクセストークン
-//     channelID: '1618012448',
-//   channelSecret: '62deb87527fb6fee758d4a7b4acc81f2',
-//   channelToken: "A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU="
-// });
-
-// const client = new line.Client({
-//   channelAccessToken: 'A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU='
-// });
+const client = new line.Client({
+  channelAccessToken: 'A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU='
+});
 // const userId = "Ubc575d55731711f84127f2230c79c526";
 
 
@@ -58,6 +51,11 @@ const clovaSkillHandler = clova.Client
 
     switch (intent) {
       case 'submit':
+
+        client.sendMessage(userId,{
+          type: 'text',
+          text: slots.object + 'を' + slots.where + 'に置きました。'
+        })
 
         responseHelper.setSimpleSpeech({
           lang: 'ja',
