@@ -51,7 +51,7 @@ const clovaSkillHandler = clova.Client
         insertSlots.object + ", " + insertSlots.where + ", " + insertSlots.position + ");"
         client.query(qs, function(err, result) {
           if(err) {
-            console.log('Insert Error! :' + (i+1));
+            console.log(err);
             throw err;
           }
         });
