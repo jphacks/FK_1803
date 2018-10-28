@@ -37,17 +37,34 @@ const clovaSkillHandler = clova.Client
         console.log(err);
         console.log(client);
         console.log(done);
+        if (err) {
+          console.log('Connection Error:', err);
+          throw err;
+      } else {
+        //INSERTの処理
+        const insertSlots = responseHelper.getSlots();
+        console.log(insertSlots.object);
+        console.log(insertSlots.where);
+        console.log(insertSlots.position);
+
+        var qs = "INSERT INTO test (slot_object, slot_where, slot_position) VALUES(" +
+        insertSlots.object + ", " + insertSlots.where + ", " + insertSlots.position + ");"
+        client.query(qs, function(err, result) {
+          if(err) {
+            console.log('Insert Error! :' + (i+1));
+            throw err;
+          }
+        });
+      }
       });
       
-      //INSERTの処理
-      const insertSlots = responseHelper.getSlots();
-      console.log(insertSlots.object);
-      console.log(insertSlots.where);
-      console.log(insertSlots.position);
+      
+      // const insertSlots = responseHelper.getSlots();
+      // console.log(insertSlots.object);
+      // console.log(insertSlots.where);
+      // console.log(insertSlots.position);
 
       console.log(insertSlots);
-
-      // pg.query('INSERT INTO test SET ?')
 
       responseHelper.setSimpleSpeech({
         lang: 'ja',
