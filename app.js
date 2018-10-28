@@ -1,7 +1,7 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
 const pg = require('pg');
-var pool = new pg();
+var pool = new pg.Pool();
 
 
 const clovaSkillHandler = clova.Client
