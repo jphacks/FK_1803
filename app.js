@@ -1,6 +1,12 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
 
+const client = new line.Client({
+    //Messaging APIのアクセストークン
+  channelAccessToken: "vvPiLfxyfBkSrFtilugiIJr46o48556gMvC5mqSC5hubvnoXqt9EXfWNICJiifWGBM6RNIObdGiJQ49HNgbLTKMWEnFk3ek6c9HFujOe9FpKHE7mNMH65PpK+lyffcmpuboMSY2JTgA0BdjLvcYzLAdB04t89/1O/w1cDnyilFU=" 
+});
+
+
 const clovaSkillHandler = clova.Client
   .configureSkill()
 
@@ -32,6 +38,8 @@ const clovaSkillHandler = clova.Client
   .onIntentRequest(async responseHelper => {
     const intent = responseHelper.getIntentName();
     const sessionId = responseHelper.getSessionId();
+    const userId = responseHelper.getUser().userId;
+
 
     console.log('Intent:' + intent);
 
@@ -48,6 +56,12 @@ const clovaSkillHandler = clova.Client
 
     switch (intent) {
       case 'submit':
+        const slots = responseHelper.getSlots();
+        client.pushMessage(userId, {
+          type: 'text',
+          text: slots.object + 'を'　+ slots.where + 'におきました。'
+        });
+      
         responseHelper.setSimpleSpeech({
           lang: 'ja',
           type: 'PlainText',
@@ -58,11 +72,18 @@ const clovaSkillHandler = clova.Client
           subsequent: true
         })
 
+
         // responseHelper.setSimpleSpeech(continuous, true)
 
         break;
       case 'answer':
         const slots = responseHelper.getSlots();
+
+        client.pushMessage(userId, {
+          type: 'text',
+          text: slots.object + 'をさがしました。'
+        });
+
         let speech = {
           lang: 'ja',
           type: 'PlainText',
