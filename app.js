@@ -67,7 +67,7 @@ const clovaSkillHandler = clova.Client
       // console.log(insertSlots.where);
       // console.log(insertSlots.position);
 
-      console.log(insertSlots);
+      // console.log(insertSlots);
 
       responseHelper.setSimpleSpeech({
         lang: 'ja',
