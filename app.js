@@ -1,6 +1,6 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
-const line = require('line-bot-sdk');
+// const line = require('line-bot-sdk');
 
 // const client = line.client({
 //     //Messaging APIのアクセストークン
@@ -9,10 +9,10 @@ const line = require('line-bot-sdk');
 //   channelToken: "A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU="
 // });
 
-const client = new line.Client({
-  channelAccessToken: 'A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU='
-});
-const userId = "Ubc575d55731711f84127f2230c79c526";
+// const client = new line.Client({
+//   channelAccessToken: 'A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU='
+// });
+// const userId = "Ubc575d55731711f84127f2230c79c526";
 
 
 const clovaSkillHandler = clova.Client
@@ -59,17 +59,7 @@ const clovaSkillHandler = clova.Client
 
     switch (intent) {
       case 'submit':
-        client.pushMessage(userId, {
-          type: 'text',
-          text: 'チャットに送る内容'
-        })
-        .then(() => {
-          console.log("success")
-        })
-        .catch((err) => {
-          // エラーしたとき
-          console.log("failed")
-        })      
+
 
         responseHelper.setSimpleSpeech({
           lang: 'ja',
@@ -81,26 +71,18 @@ const clovaSkillHandler = clova.Client
           subsequent: true
         })
 
-
         // responseHelper.setSimpleSpeech(continuous, true)
 
         break;
       case 'answer':
         // const slots = responseHelper.getSlots();
 
-        // client.sendText('<target mid>', 'Message');
-
-        client.pushMessage(userId, {
-          type: 'text',
-          text: slots.object + 'をさがしました。'
-        });
-
         let speech = {
           lang: 'ja',
           type: 'PlainText',
           value: `${slots.object}は棚の上にあります。まだ続けますか？`
         }
-        if (slots.area === '') {
+        if (slots.area === undefined) {
           speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
         }
         responseHelper.setSimpleSpeech(speech);
@@ -119,9 +101,7 @@ const clovaSkillHandler = clova.Client
             type: 'PlainText',
             value: '忘れ物を探しますか？登録しますか？'
           });
-
           responseHelper.setSimpleSpeech(continuous, true);
-
         }
         break;
       
