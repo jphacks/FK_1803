@@ -95,6 +95,14 @@ const clovaSkillHandler = clova.Client
       
       case 'Clova.NoIntent':
         if (responseHelper.getSessionAttributes().subsequent === true){
+
+        responseHelper.setSimpleSpeech({
+            lang: 'ja',
+            type: 'PlainText',
+            value: 'さようなら'
+        });
+
+
          responseHelper.endSession();
         }
         break;
