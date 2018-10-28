@@ -129,6 +129,14 @@ const clovaSkillHandler = clova.Client
               console.log(selectWhere);
               console.log(selectPosition);
             });
+            let speech = {
+              lang: 'ja',
+              type: 'PlainText',
+              value: `${selectSlots.object}は${selectWhere}の${selectPosition}にあります。まだ続けますか？`
+            }
+            if (slots.area === undefined) {
+              speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
+            }
             // console.log(fields);
             // console.log(rows);
             // console.log(rows[0].slot_where);
@@ -140,14 +148,14 @@ const clovaSkillHandler = clova.Client
         }
         ); 
 
-        let speech = {
-          lang: 'ja',
-          type: 'PlainText',
-          value: `${selectSlots.object}は${selectWhere}の${selectPosition}にあります。まだ続けますか？`
-        }
-        if (slots.area === undefined) {
-          speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
-        }
+        // let speech = {
+        //   lang: 'ja',
+        //   type: 'PlainText',
+        //   value: `${selectSlots.object}は${selectWhere}の${selectPosition}にあります。まだ続けますか？`
+        // }
+        // if (slots.area === undefined) {
+        //   speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
+        // }
         responseHelper.setSimpleSpeech(speech);
         responseHelper.setSimpleSpeech(continuous, true);
 
