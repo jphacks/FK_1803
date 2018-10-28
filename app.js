@@ -13,14 +13,14 @@ const clovaSkillHandler = clova.Client
     responseHelper.setSimpleSpeech({
       lang: 'ja',
       type: 'PlainText',
-      value: '忘れ物を探します',
+      value: 'ものを登録または検索します。',
     });
 
     // しばらく反応がなければこちらをしゃべる
     responseHelper.setSimpleSpeech({
       lang: 'ja',
       type: 'PlainText',
-      value: '忘れ物を探しますか？登録しますか？'
+      value: '〜は〜に置いた、〜はどこ？と話しかけてください。'
     }, true);
 
 
@@ -124,6 +124,7 @@ const port = process.env.PORT || 3000;
 
 //リクエストの検証を行う場合。環境変数APPLICATION_ID(値はClova Developer Center上で入力したExtension ID)が必須
 const clovaMiddleware = clova.Middleware({ applicationId: 'com.startfox.wasrenbo' });
+
 app.post('/clova', clovaMiddleware, clovaSkillHandler);
 
 app.listen(port, () => console.log(`Server running on ${port}`));
