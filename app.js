@@ -12,7 +12,7 @@ const line = require('line-bot-sdk');
 const client = new line.Client({
   channelAccessToken: 'A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU='
 });
-const userId = request.​session.user.userId​​​;
+const userId = "Ubc575d55731711f84127f2230c79c526";
 
 
 const clovaSkillHandler = clova.Client
@@ -87,7 +87,7 @@ const clovaSkillHandler = clova.Client
       case 'answer':
         // const slots = responseHelper.getSlots();
 
-        client.sendText('<target mid>', 'Message');
+        // client.sendText('<target mid>', 'Message');
 
         client.pushMessage(userId, {
           type: 'text',
