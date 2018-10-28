@@ -45,6 +45,8 @@ const clovaSkillHandler = clova.Client
       console.log(insertSlots.where);
       console.log(insertSlots.position);
 
+      console.log(insertSlots);
+
       // pg.query('INSERT INTO test SET ?')
 
       responseHelper.setSimpleSpeech({
