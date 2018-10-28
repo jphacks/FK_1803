@@ -48,7 +48,10 @@ const clovaSkillHandler = clova.Client
         console.log(insertSlots.position);
 
         var qs = "INSERT INTO test (slot_object, slot_where, slot_position) VALUES(" +
-        insertSlots.object + ", " + insertSlots.where + ", " + insertSlots.position + ");"
+        "'" + insertSlots.object + "'" + ", " + 
+        "'" + insertSlots.where + "'" + ", " + 
+        "'" + insertSlots.position + "'" + 
+        ");";
         client.query(qs, function(err, result) {
           if(err) {
             console.log(err);
