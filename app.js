@@ -1,5 +1,6 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
+const pg = require('pg');
 var pool = new pg.pool();
 
 
