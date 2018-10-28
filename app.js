@@ -53,10 +53,10 @@ const clovaSkillHandler = clova.Client
       console.log("Success!")
     }
     console.log(responseHelper.getSessionAttributes())
+    const slots = responseHelper.getSlots();
 
     switch (intent) {
       case 'submit':
-        const slots = responseHelper.getSlots();
         client.pushMessage(userId, {
           type: 'text',
           text: slots.object + 'を'　+ slots.where + 'におきました。'
@@ -77,7 +77,7 @@ const clovaSkillHandler = clova.Client
 
         break;
       case 'answer':
-        const slots = responseHelper.getSlots();
+        // const slots = responseHelper.getSlots();
 
         client.pushMessage(userId, {
           type: 'text',
