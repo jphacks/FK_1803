@@ -121,22 +121,30 @@ const clovaSkillHandler = clova.Client
 
             var qs2 = "SELECT slot_where, slot_position FROM test WHERE slot_object="
             + "'" + selectSlots.object + "'" + "LIMIT 1;";
-            var query = client.query(qs2);
-            query.on('row', function(row) {
-              console.log(row);
-              var selectWhere = row.slot_where;
-              var selectPosition = row.slot_position;
-              console.log(selectWhere);
-              console.log(selectPosition);
-            });
-            let speech = {
-              lang: 'ja',
-              type: 'PlainText',
-              value: `${selectSlots.object}は${selectWhere}の${selectPosition}にあります。まだ続けますか？`
-            }
-            if (slots.area === undefined) {
-              speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
-            }
+            // var query = client.query(qs2);
+            // query.on('row', function(row) {
+            //   console.log(row);
+            //   var selectWhere = row.slot_where;
+            //   var selectPosition = row.slot_position;
+            //   console.log(selectWhere);
+            //   console.log(selectPosition);
+            // });
+            // let speech = {
+            //   lang: 'ja',
+            //   type: 'PlainText',
+            //   value: `${selectSlots.object}は${selectWhere}の${selectPosition}にあります。まだ続けますか？`
+            // }
+            // if (slots.area === undefined) {
+            //   speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
+            // }
+
+            new Promise(function(resolve, reject) {
+              query = client.query(qs2)
+              query.on('row', function(result) {
+                   responseHelper.setSimpleSpeech(result.slot_where + 'にあります');
+                    resolve();
+              });
+             });
             // console.log(fields);
             // console.log(rows);
             // console.log(rows[0].slot_where);
