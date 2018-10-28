@@ -31,13 +31,21 @@ const clovaSkillHandler = clova.Client
     }
 
     if (intent === 'submit') {
-      //INSERTの処理
+      //postgres DBに接続
       pg.connect(process.env.DATABASE_URL || "tcp://localhost:5432/mylocaldb", function(err, client, done) {
         console.log(err);
         console.log(client);
         console.log(done);
       });
       
+      //INSERTの処理
+      const insertSlots = responseHelper.getSlots();
+      console.log(insertSlots.object);
+      console.log(insertSlots.where);
+      console.log(insertSlots.position);
+
+      // pg.query('INSERT INTO test SET ?')
+
       responseHelper.setSimpleSpeech({
         lang: 'ja',
         type: 'PlainText',
