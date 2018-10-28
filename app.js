@@ -60,14 +60,6 @@ const clovaSkillHandler = clova.Client
         });
       }
       });
-      
-      
-      // const insertSlots = responseHelper.getSlots();
-      // console.log(insertSlots.object);
-      // console.log(insertSlots.where);
-      // console.log(insertSlots.position);
-
-      // console.log(insertSlots);
 
       responseHelper.setSimpleSpeech({
         lang: 'ja',
