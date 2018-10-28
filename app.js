@@ -4,7 +4,9 @@ const line = require('line-bot-sdk');
 
 const client = line.client({
     //Messaging APIのアクセストークン
-  channelAccessToken: "vvPiLfxyfBkSrFtilugiIJr46o48556gMvC5mqSC5hubvnoXqt9EXfWNICJiifWGBM6RNIObdGiJQ49HNgbLTKMWEnFk3ek6c9HFujOe9FpKHE7mNMH65PpK+lyffcmpuboMSY2JTgA0BdjLvcYzLAdB04t89/1O/w1cDnyilFU=" 
+    channelID: '1617995270',
+  channelSecret: 'ac5ed545f83f3d4cedd4f510ee2fd429',
+  channelToken: "6stEM2pVNUf9zymbATj8zFo+S0t1kGvji07+fLafd7Url4A7zWPt4sibrHMiIg2cBM6RNIObdGiJQ49HNgbLTKMWEnFk3ek6c9HFujOe9FrDjqql6tMFkQBkWjWJ14su9v439IiS6Y+sWmL/0G79sgdB04t89/1O/w1cDnyilFU=" 
 });
 const clovaSkillHandler = clova.Client
   .configureSkill()
@@ -77,6 +79,8 @@ const clovaSkillHandler = clova.Client
         break;
       case 'answer':
         // const slots = responseHelper.getSlots();
+
+        client.sendText('<target mid>', 'Message');
 
         client.pushMessage(userId, {
           type: 'text',
