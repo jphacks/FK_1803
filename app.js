@@ -149,13 +149,17 @@ const clovaSkillHandler = clova.Client
         break;
 
       case 'otoja':
-        responseHelper.setSimpleSpeech({
-          lang: 'ja',
-          type: 'PlainText',
-          value: 'おとじゃです'
-        })
-        responseHelper.setSimpleSpeech(continuous, true)
-        break;
+        responseHelper.setSimpleSpeech(
+          clova.SpeechBuilder.createSpeechUrl('https://github.com/jphacks/FK_1803/blob/soufuru/sounds/otoja.mp3')
+        //   {
+        //   lang: 'ja',
+        //   type: 'PlainText',
+        //   value: 'おとじゃです'
+        // }
+        )
+        // responseHelper.setSimpleSpeech(continuous, true)
+          break;
+
 
     }
 
