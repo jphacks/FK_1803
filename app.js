@@ -128,7 +128,7 @@ const clovaSkillHandler = clova.Client
               var selectPosition = row.slot_position;
               console.log(selectWhere);
               console.log(selectPosition);
-            })
+            });
             // console.log(fields);
             // console.log(rows);
             // console.log(rows[0].slot_where);
