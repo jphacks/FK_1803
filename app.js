@@ -6,57 +6,116 @@ const clovaSkillHandler = clova.Client
 
   //起動時に喋る
   .onLaunchRequest(responseHelper => {
+
+    responseHelper.setSessionAttributes({});    
+
+    // まずはこっちをしゃべる
     responseHelper.setSimpleSpeech({
       lang: 'ja',
       type: 'PlainText',
       value: '忘れ物を探します',
     });
+
+    // しばらく反応がなければこちらをしゃべる
+    responseHelper.setSimpleSpeech({
+      lang: 'ja',
+      type: 'PlainText',
+      value: '忘れ物を探しますか？登録しますか？'
+    }, true);
+
+
   })
 
-  //ユーザーからの発話が来たら反応する箇所
+  // ユーザーからの発話が来たら反応する箇所
+  // onSessionEndedRequestがなければここが呼ばれ続ける
+
   .onIntentRequest(async responseHelper => {
     const intent = responseHelper.getIntentName();
     const sessionId = responseHelper.getSessionId();
 
     console.log('Intent:' + intent);
 
-    if (intent === 'otoja') {
-      responseHelper.setSimpleSpeech({
-        lang: 'ja',
-        type: 'PlainText',
-        value: 'おとじゃです'
-      })
+    let continuous = {
+      lang: 'ja',
+      type: 'PlainText',
+      value: 'まだ続けますか？'
+    }
+
+    if(responseHelper.getSessionAttributes().subsequent === true){
+      console.log("Success!")
+    }
+    console.log(responseHelper.getSessionAttributes())
+
+    switch (intent) {
+      case 'submit':
+        responseHelper.setSimpleSpeech({
+          lang: 'ja',
+          type: 'PlainText',
+          value: '登録しました。まだ続けますか？'
+        })
+
+        responseHelper.setSessionAttributes({
+          subsequent: true
+        })
+
+        // responseHelper.setSimpleSpeech(continuous, true)
+
+        break;
+      case 'answer':
+        const slots = responseHelper.getSlots();
+        let speech = {
+          lang: 'ja',
+          type: 'PlainText',
+          value: `${slots.object}は棚の上にあります。まだ続けますか？`
+        }
+        if (slots.area === '') {
+          speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
+        }
+        responseHelper.setSimpleSpeech(speech);
+        responseHelper.setSimpleSpeech(continuous, true);
+
+        responseHelper.setSessionAttributes({
+          subsequent: true
+        });
+
+        break;
+      
+      case 'Clova.YesIntent':
+        if (responseHelper.getSessionAttributes().subsequent === true){
+          responseHelper.setSimpleSpeech({
+            lang: 'ja',
+            type: 'PlainText',
+            value: '忘れ物を探しますか？登録しますか？'
+          });
+
+          responseHelper.setSimpleSpeech(continuous, true);
+
+        }
+        break;
+      
+      case 'Clova.NoIntent':
+        if (responseHelper.getSessionAttributes().subsequent === true){
+         responseHelper.endSession();
+        }
+        break;
+
+      case 'otoja':
+        responseHelper.setSimpleSpeech({
+          lang: 'ja',
+          type: 'PlainText',
+          value: 'おとじゃです'
+        })
+        responseHelper.setSimpleSpeech(continuous, true)
+        break;
     }
 
 
-    if (intent === 'submit') {
-      responseHelper.setSimpleSpeech({
-        lang: 'ja',
-        type: 'PlainText',
-        value: `登録しました。`
-      })
-    }
-    if (intent === 'answer') {
-      const slots = responseHelper.getSlots();
-      console.log(slots);
-      console.log(slots.object);
-      let speech = {
-        lang: 'ja',
-        type: 'PlainText',
-        value: `${slots.object}は棚の上にあります。`
-      }
-      if (slots.object === undefined) {
-        speech.value = `捜し物の場所は登録されていません。`
-      }
-      responseHelper.setSimpleSpeech(speech);
-      responseHelper.setSimpleSpeech(speech, true);
-    }
   })
 
   //終了時
-  .onSessionEndedRequest(responseHelper => {
-    const sessionId = responseHelper.getSessionId();
-  })
+  // .onSessionEndedRequest(responseHelper => {
+  //   const sessionId = responseHelper.getSessionId();
+  // })
   .handle();
 
 
