@@ -127,6 +127,7 @@ const clovaSkillHandler = clova.Client
               throw err;
               } else {
                 console.log(fields);
+                console.log(rows);
                 console.log(rows[0].slot_where);
                 console.log(rows[0].slot_position);
 
