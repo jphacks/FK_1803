@@ -1,5 +1,6 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
+const line = require('@line/bot-sdk');
 
 const client = new line.Client({
     //Messaging APIのアクセストークン
