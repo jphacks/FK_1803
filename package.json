@@ -11,9 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@line/bot-sdk": "^6.3.0",
     "@line/clova-cek-sdk-nodejs": "^1.1.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "pg": "^6.4.2"
+    "pg": "^6.4.2",
+    "line-bot-sdk": "^0.1.4"
   }
 }
