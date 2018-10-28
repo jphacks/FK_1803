@@ -121,7 +121,7 @@ const clovaSkillHandler = clova.Client
 
             var qs2 = "SELECT slot_where, slot_position FROM test WHERE slot_object="
             + "'" + selectSlots.object + "';";
-            client.query(qs2);
+            var query = client.query(qs2);
             query.on('row', function(row) {
               console.log(row);
             })
