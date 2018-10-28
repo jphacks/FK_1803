@@ -38,11 +38,6 @@ const clovaSkillHandler = clova.Client
     }, true);
   })
 
-  let continuous = {
-    lang: 'ja',
-    type: 'PlainText',
-    value: 'まだ続けますか？'
-  }
   // ユーザーからの発話が来たら反応する箇所
   // onSessionEndedRequestがなければここが呼ばれ続ける
 
@@ -50,7 +45,11 @@ const clovaSkillHandler = clova.Client
     const intent = responseHelper.getIntentName();
     const sessionId = responseHelper.getSessionId();
     const userId = responseHelper.getUser().userId;
-
+    let continuous = {
+      lang: 'ja',
+      type: 'PlainText',
+      value: 'まだ続けますか？'
+    }
     if(responseHelper.getSessionAttributes().subsequent === true){
       console.log("Success!")
     }
@@ -59,7 +58,6 @@ const clovaSkillHandler = clova.Client
 
     switch (intent) {
       case 'submit':
-
 
         responseHelper.setSimpleSpeech({
           lang: 'ja',
