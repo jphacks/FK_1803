@@ -59,17 +59,18 @@ const clovaSkillHandler = clova.Client
 
     switch (intent) {
       case 'submit':
-      client.pushMessage(userId, {
-        type: 'text',
-        text: 'チャットに送る内容'
-      })
-      .then(() => {
-        console.log("success");
-      })
-      .catch((err) => {
-        // エラーしたとき
-        console.log("failed");
-      });​      
+        client.pushMessage(userId, {
+          type: 'text',
+          text: 'チャットに送る内容'
+        })
+        .then(() => {
+          console.log("success")
+        })
+        .catch((err) => {
+          // エラーしたとき
+          console.log("failed")
+        })      
+
         responseHelper.setSimpleSpeech({
           lang: 'ja',
           type: 'PlainText',
