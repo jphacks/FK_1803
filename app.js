@@ -121,22 +121,20 @@ const clovaSkillHandler = clova.Client
 
             var qs2 = "SELECT slot_where, slot_position FROM test WHERE slot_object="
             + "'" + selectSlots.object + "';";
-            client.query(qs2, function (err, rows, fields) {
-              if(err) {
-              console.log(err);
-              throw err;
-              } else {
-                console.log(fields);
-                console.log(rows);
-                console.log(rows[0].slot_where);
-                console.log(rows[0].slot_position);
+            client.query(qs2);
+            query.on('row', function(row) {
+              console.log(row);
+            })
+            // console.log(fields);
+            // console.log(rows);
+            // console.log(rows[0].slot_where);
+            // console.log(rows[0].slot_position);
 
-                var selectWhere = rows[0].slot_where;
-                var selectPosition = rows[0].slot_position;
-              }
-            });
+            // var selectWhere = rows[0].slot_where;
+            // var selectPosition = rows[0].slot_position;
           }
-        }); 
+        }
+        ); 
 
         let speech = {
           lang: 'ja',
