@@ -1,6 +1,6 @@
 # わすれんぼ
 
-[![Product Name](image.png)](https://www.youtube.com/watch?v=G5rULR53uMk)
+[![Product Name](image.png)](https://youtu.be/rVMJIfPe9TI)
 
 ## 製品概要
 ### もの忘れ x Tech
