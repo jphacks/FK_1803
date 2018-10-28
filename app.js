@@ -1,13 +1,12 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
-const line = require('@line/bot-sdk');
+const line = require('line-bot-sdk');
+
 
 const client = new line.Client({
     //Messaging APIのアクセストークン
   channelAccessToken: "vvPiLfxyfBkSrFtilugiIJr46o48556gMvC5mqSC5hubvnoXqt9EXfWNICJiifWGBM6RNIObdGiJQ49HNgbLTKMWEnFk3ek6c9HFujOe9FpKHE7mNMH65PpK+lyffcmpuboMSY2JTgA0BdjLvcYzLAdB04t89/1O/w1cDnyilFU=" 
 });
-
-
 const clovaSkillHandler = clova.Client
   .configureSkill()
 
