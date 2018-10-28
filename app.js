@@ -1,7 +1,7 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
 const pg = require('pg');
-var pool = new pg.Pool();
+// var pool = new pg.Pool();
 
 
 const clovaSkillHandler = clova.Client
@@ -33,7 +33,7 @@ const clovaSkillHandler = clova.Client
 
     if (intent === 'submit') {
       //postgres DBに接続
-      pool.connect(process.env.DATABASE_URL || "tcp://localhost:5432/mylocaldb", function(err, client, done) {
+      pg.connect(process.env.DATABASE_URL || "tcp://localhost:5432/mylocaldb", function(err, client, done) {
         console.log(err);
         console.log(client);
         console.log(done);
