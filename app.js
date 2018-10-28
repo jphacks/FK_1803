@@ -72,7 +72,7 @@ const app = new express();
 const port = process.env.PORT || 3000;
 
 //リクエストの検証を行う場合。環境変数APPLICATION_ID(値はClova Developer Center上で入力したExtension ID)が必須
-const clovaMiddleware = clova.Middleware({ applicationId: 'com.startfox.wasrenbo' });
+const clovaMiddleware = clova.Middleware({ applicationId: 'com.test.kiyokawa' });
 app.post('/clova', clovaMiddleware, clovaSkillHandler);
 
 app.listen(port, () => console.log(`Server running on ${port}`));
