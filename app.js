@@ -1,11 +1,15 @@
 const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
+const pg = require('pg');
+// var pool = new pg.Pool();
+
 const line = require('@line/bot-sdk');
 
 const client = new line.Client({
   channelAccessToken: 'A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU='
 });
 // const userId = "Ubc575d55731711f84127f2230c79c526";
+
 
 
 const clovaSkillHandler = clova.Client
@@ -56,6 +60,35 @@ const clovaSkillHandler = clova.Client
           type: 'text',
           text: slots.object + 'を' + slots.where + 'に置きました。'
         })
+    
+      //postgres DBに接続
+      pg.connect(process.env.DATABASE_URL || "tcp://localhost:5432/mylocaldb", function(err, client, done) {
+        console.log(err);
+        console.log(client);
+        console.log(done);
+        if (err) {
+          console.log('Connection Error:', err);
+          throw err;
+      } else {
+        //INSERTの処理
+        const insertSlots = responseHelper.getSlots();
+        console.log(insertSlots.object);
+        console.log(insertSlots.where);
+        console.log(insertSlots.position);
+
+        var qs = "INSERT INTO test (slot_object, slot_where, slot_position) VALUES(" +
+        "'" + insertSlots.object + "'" + ", " + 
+        "'" + insertSlots.where + "'" + ", " + 
+        "'" + insertSlots.position + "'" + 
+        ");";
+        client.query(qs, function(err, result) {
+          if(err) {
+            console.log(err);
+            throw err;
+          }
+        });
+      }
+      }); 
 
         responseHelper.setSimpleSpeech({
           lang: 'ja',
@@ -123,6 +156,7 @@ const clovaSkillHandler = clova.Client
         })
         responseHelper.setSimpleSpeech(continuous, true)
         break;
+
     }
 
 
@@ -139,6 +173,7 @@ const app = new express();
 const port = process.env.PORT || 3000;
 
 //リクエストの検証を行う場合。環境変数APPLICATION_ID(値はClova Developer Center上で入力したExtension ID)が必須
+// const clovaMiddleware = clova.Middleware({ applicationId: 'com.test.kiyokawa' });
 const clovaMiddleware = clova.Middleware({ applicationId: 'com.startfox.wasrenbo' });
 
 app.post('/clova', clovaMiddleware, clovaSkillHandler);
