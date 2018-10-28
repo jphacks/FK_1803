@@ -2,12 +2,19 @@ const clova = require('@line/clova-cek-sdk-nodejs');
 const express = require('express');
 const line = require('line-bot-sdk');
 
-const client = line.client({
-    //Messaging APIのアクセストークン
-    channelID: '1617995270',
-  channelSecret: 'ac5ed545f83f3d4cedd4f510ee2fd429',
-  channelToken: "6stEM2pVNUf9zymbATj8zFo+S0t1kGvji07+fLafd7Url4A7zWPt4sibrHMiIg2cBM6RNIObdGiJQ49HNgbLTKMWEnFk3ek6c9HFujOe9FrDjqql6tMFkQBkWjWJ14su9v439IiS6Y+sWmL/0G79sgdB04t89/1O/w1cDnyilFU=" 
+// const client = line.client({
+//     //Messaging APIのアクセストークン
+//     channelID: '1618012448',
+//   channelSecret: '62deb87527fb6fee758d4a7b4acc81f2',
+//   channelToken: "A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU="
+// });
+
+const client = new line.Client({
+  channelAccessToken: 'A2rzNxY4Vp0nhGlG6ZHCOlrr6wVxGsmWOeVcxYDKnDeCbI71+9qqz06TKtvkzV1gG4665DoKEeAQpss6SPAYJJiaXZjHsNacnfbI1jpME7Wuzm6hj8n1bC3egAQKvG7RfiNPACMK6AToNhD/w6f1GAdB04t89/1O/w1cDnyilFU='
 });
+const userId = request.​session.user.userId​​​;
+
+
 const clovaSkillHandler = clova.Client
   .configureSkill()
 
@@ -29,10 +36,13 @@ const clovaSkillHandler = clova.Client
       type: 'PlainText',
       value: '〜は〜に置いた、〜はどこ？と話しかけてください。'
     }, true);
-
-
   })
 
+  let continuous = {
+    lang: 'ja',
+    type: 'PlainText',
+    value: 'まだ続けますか？'
+  }
   // ユーザーからの発話が来たら反応する箇所
   // onSessionEndedRequestがなければここが呼ばれ続ける
 
@@ -40,15 +50,6 @@ const clovaSkillHandler = clova.Client
     const intent = responseHelper.getIntentName();
     const sessionId = responseHelper.getSessionId();
     const userId = responseHelper.getUser().userId;
-
-
-    console.log('Intent:' + intent);
-
-    let continuous = {
-      lang: 'ja',
-      type: 'PlainText',
-      value: 'まだ続けますか？'
-    }
 
     if(responseHelper.getSessionAttributes().subsequent === true){
       console.log("Success!")
@@ -58,11 +59,17 @@ const clovaSkillHandler = clova.Client
 
     switch (intent) {
       case 'submit':
-        client.pushMessage(userId, {
-          type: 'text',
-          text: slots.object + 'を'　+ slots.where + 'におきました。'
-        });
-      
+      client.pushMessage(userId, {
+        type: 'text',
+        text: 'チャットに送る内容'
+      })
+      .then(() => {
+        console.log("success");
+      })
+      .catch((err) => {
+        // エラーしたとき
+        console.log("failed");
+      });​      
         responseHelper.setSimpleSpeech({
           lang: 'ja',
           type: 'PlainText',
