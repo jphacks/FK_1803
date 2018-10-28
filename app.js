@@ -52,7 +52,7 @@ const clovaSkillHandler = clova.Client
     switch (intent) {
       case 'submit':
 
-        client.sendMessage(userId,{
+        client.pushMessage(userId,{
           type: 'text',
           text: slots.object + 'を' + slots.where + 'に置きました。'
         })
