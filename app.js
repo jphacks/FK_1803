@@ -61,34 +61,34 @@ const clovaSkillHandler = clova.Client
           text: slots.object + 'を' + slots.where + 'に置きました。'
         })
     
-      //postgres DBに接続
-      pg.connect(process.env.DATABASE_URL || "tcp://localhost:5432/mylocaldb", function(err, client, done) {
-        console.log(err);
-        console.log(client);
-        console.log(done);
-        if (err) {
-          console.log('Connection Error:', err);
-          throw err;
-      } else {
-        //INSERTの処理
-        const insertSlots = responseHelper.getSlots();
-        console.log(insertSlots.object);
-        console.log(insertSlots.where);
-        console.log(insertSlots.position);
-
-        var qs = "INSERT INTO test (slot_object, slot_where, slot_position) VALUES(" +
-        "'" + insertSlots.object + "'" + ", " + 
-        "'" + insertSlots.where + "'" + ", " + 
-        "'" + insertSlots.position + "'" + 
-        ");";
-        client.query(qs, function(err, result) {
-          if(err) {
-            console.log(err);
+        //postgres DBに接続
+        pg.connect(process.env.DATABASE_URL || "tcp://localhost:5432/mylocaldb", function(err, client, done) {
+          console.log(err);
+          console.log(client);
+          console.log(done);
+          if (err) {
+            console.log('Connection Error:', err);
             throw err;
+          } else {
+            //INSERTの処理
+            const insertSlots = responseHelper.getSlots();
+            console.log(insertSlots.object);
+            console.log(insertSlots.where);
+            console.log(insertSlots.position);
+
+            var qs = "INSERT INTO test (slot_object, slot_where, slot_position) VALUES(" +
+            "'" + insertSlots.object + "'" + ", " + 
+            "'" + insertSlots.where + "'" + ", " + 
+            "'" + insertSlots.position + "'" + 
+            ");";
+            client.query(qs, function(err, result) {
+              if(err) {
+              console.log(err);
+              throw err;
+              }
+            });
           }
-        });
-      }
-      }); 
+        }); 
 
         responseHelper.setSimpleSpeech({
           lang: 'ja',
@@ -104,12 +104,43 @@ const clovaSkillHandler = clova.Client
 
         break;
       case 'answer':
-        // const slots = responseHelper.getSlots();
+              //postgres DBに接続
+        pg.connect(process.env.DATABASE_URL || "tcp://localhost:5432/mylocaldb", function(err, client, done) {
+          console.log(err);
+          console.log(client);
+          console.log(done);
+          if (err) {
+            console.log('Connection Error:', err);
+            throw err;
+          } else {
+            //SELECTの処理
+            const selectSlots = responseHelper.getSlots();
+            console.log(selectSlots.object);
+            // console.log(selectSlots.where);
+            // console.log(selectSlots.position);
+
+            var qs2 = "SELECT slot_where, slot_position FROM test WHERE slot_object="
+            + "'" + selectSlots.object + "';";
+            client.query(qs2, function (err, rows, fields) {
+              if(err) {
+              console.log(err);
+              throw err;
+              } else {
+                console.log(fields);
+                console.log(rows[0].slot_where);
+                console.log(rows[0].slot_position);
+
+                var selectWhere = rows[0].slot_where;
+                var selectPosition = rows[0].slot_position;
+              }
+            });
+          }
+        }); 
 
         let speech = {
           lang: 'ja',
           type: 'PlainText',
-          value: `${slots.object}は棚の上にあります。まだ続けますか？`
+          value: `${selectSlots.object}は${selectWhere}の${selectPosition}にあります。まだ続けますか？`
         }
         if (slots.area === undefined) {
           speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
