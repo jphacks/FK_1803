@@ -104,7 +104,8 @@ const clovaSkillHandler = clova.Client
 
         break;
       case 'answer':
-              //postgres DBに接続
+
+        //postgres DBに接続
         pg.connect(process.env.DATABASE_URL || "tcp://localhost:5432/mylocaldb", function(err, client, done) {
           console.log(err);
           console.log(client);
@@ -124,27 +125,35 @@ const clovaSkillHandler = clova.Client
             // var query = client.query(qs2);
             // query.on('row', function(row) {
             //   console.log(row);
-            //   var selectWhere = row.slot_where;
-            //   var selectPosition = row.slot_position;
+            //   const selectWhere = row.slot_where;
+            //   const selectPosition = row.slot_position;
             //   console.log(selectWhere);
             //   console.log(selectPosition);
             // });
+
             // let speech = {
             //   lang: 'ja',
             //   type: 'PlainText',
             //   value: `${selectSlots.object}は${selectWhere}の${selectPosition}にあります。まだ続けますか？`
             // }
-            // if (slots.area === undefined) {
-            //   speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
-            // }
 
             new Promise(function(resolve, reject) {
-              query = client.query(qs2)
+              var query = client.query(qs2);
               query.on('row', function(result) {
-                   responseHelper.setSimpleSpeech(result.slot_where + 'にあります');
-                    resolve();
+                   responseHelper.setSimpleSpeech(result.slot_where + 'の' + result.slot_position + 'にあります。' + 'まだ続けますか?');
+                   if (selectSlots.object === undefined) {
+                     responseHelper.setSimpleSpeech('捜し物の場所は登録されていません。まだ続けますか？');
+                   }
+                   resolve();
               });
-             });
+            });
+
+            responseHelper.setSimpleSpeech(speech);
+            responseHelper.setSimpleSpeech(continuous, true);
+    
+            responseHelper.setSessionAttributes({
+              subsequent: true
+            });
             // console.log(fields);
             // console.log(rows);
             // console.log(rows[0].slot_where);
@@ -164,12 +173,6 @@ const clovaSkillHandler = clova.Client
         // if (slots.area === undefined) {
         //   speech.value = '捜し物の場所は登録されていません。まだ続けますか？'
         // }
-        responseHelper.setSimpleSpeech(speech);
-        responseHelper.setSimpleSpeech(continuous, true);
-
-        responseHelper.setSessionAttributes({
-          subsequent: true
-        });
 
         break;
       
